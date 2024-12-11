@@ -12,7 +12,9 @@ TO_CHAR(MOD(iltrdj, 1000), '000'), 'YYYYDDD')
 
 select count (distinct ilitm) from jdepd.f4111
 
+select count (distinct ilitm) from jdepd.f4111
+
 
 select ilitm, (iluncs / 10000) as unitcost, TO_DATE(TO_CHAR(1900 + FLOOR(iltrdj / 1000), '0000') ||
 TO_CHAR(MOD(iltrdj, 1000), '000'), 'YYYYDDD') as Date
-from jdepd.f4111 where ilitm = 15059
+from jdepd.f4111 where ilitm = 15059...
