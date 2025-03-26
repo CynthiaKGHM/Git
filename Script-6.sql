@@ -1,0 +1,2 @@
+SELECT active, "location", locationdescription, "position", positionname, employmentstatus, employmentstatusdescription, jobstatus, jobstatusdescription, wcbgroup, wcbgroupdescription, unioncode, unioncodedescription, workgroup, workgroupdescription, scheduletemplate, scheduletemplatedescription, reportstoposition, reportstoemployee, employeenumber, employmentgroup, employmentgroupdescription, initialhiredate, lasthiredate, senioritydate, overtimeexempt, schedulestartdate, scheduleenddate, employeefte
+FROM robinson.employee_job_info;

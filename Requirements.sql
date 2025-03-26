@@ -1,4 +1,3 @@
-
 SELECT
     cdata_pm_project.number AS "Number",
     cdata_pm_project.short_description AS "Name",
@@ -10,7 +9,7 @@ SELECT
         WHEN cdata_pm_project.priority = 3 THEN '3 - moderate'
         WHEN cdata_pm_project.priority = 4 THEN '4 - low'
         WHEN cdata_pm_project.priority = 5 THEN '5 - planning'
-    END AS priority_Case,
+    END AS priority,
     CASE
         WHEN cdata_pm_project.state = 2 THEN 'Work in progress'
         WHEN cdata_pm_project.state = 1 THEN 'Planning'
@@ -26,12 +25,11 @@ SELECT
         WHEN cdata_pm_project.state = 3 THEN 'Closed complete'
         ELSE NULL 
     END AS state_name,
-    cdata_pm_project.phase AS "State",
+    cdata_pm_project.phase AS "Phase",
     cdata_system_user_group."name" as "Assignment Group",
     cdata_core_company."name" AS "Company",
     cdata_cmn_department."name" as "Department",
     cdata_cmn_location."name" as "Site",
-    CAST(cdata_pm_project.opened_at AS DATE) AS "Opened at",
     CAST(cdata_pm_project.start_date AS DATE) AS "Planned_Start_Date",
     CAST(cdata_pm_project.end_date AS DATE) AS "Planned_End_Date"
 FROM
@@ -40,8 +38,8 @@ FROM
     LEFT JOIN cdata_system_user AS project_manager_user ON project_manager_user.sys_id = cdata_pm_project.project_manager
     LEFT JOIN cdata_system_user AS Business_user ON Business_user.sys_id = cdata_pm_project.u_business_partner
     LEFT JOIN cdata_core_company ON cdata_core_company.sys_id = project_manager_user.company
-    LEFT JOIN cdata_cmn_location ON cdata_cmn_location.sys_id = Business_user.location
-    LEFT JOIN cdata_cmn_department ON cdata_cmn_department.sys_id = Business_user.department 
+    LEFT JOIN cdata_cmn_location ON cdata_cmn_location.sys_id = cdata_pm_project.location
+    LEFT JOIN cdata_cmn_department ON cdata_cmn_department.sys_id = cdata_pm_project.department 
 
 UNION ALL
 
@@ -72,12 +70,11 @@ SELECT
         WHEN cdata_dmn_demand.state = 3 THEN 'Closed complete'
         ELSE NULL 
     END AS state_name,
-    cdata_dmn_demand.u_status AS "Phase",
+    cdata_dmn_demand.stage AS "Phase",
     cdata_system_user_group."name" as "Assignment Group",
     cdata_core_company."name" AS "Company",
     cdata_cmn_department."name" as "Department",
     cdata_cmn_location."name" as "Site",
-    CAST(cdata_dmn_demand.opened_at AS DATE) AS "Opened at",
     CAST(cdata_dmn_demand.approved_start_date AS DATE)  AS "Planned_Start_Date",
     CAST(cdata_dmn_demand.approved_end_date AS DATE) AS "Planned_End_Date"
 FROM
@@ -86,6 +83,5 @@ FROM
     LEFT JOIN cdata_system_user AS demand_manager_user ON demand_manager_user.sys_id = cdata_dmn_demand.demand_manager
     LEFT JOIN cdata_system_user AS opened_by_user ON opened_by_user.sys_id = cdata_dmn_demand.u_reference_1  
     LEFT JOIN cdata_core_company ON cdata_core_company.sys_id = demand_manager_user.company
-	LEFT JOIN cdata_cmn_location ON cdata_cmn_location.sys_id = opened_by_user.location
-	LEFT JOIN cdata_cmn_department ON cdata_cmn_department.sys_id = opened_by_user.department
-where cdata_dmn_demand.number <> 'DMND0001627' 
+	LEFT JOIN cdata_cmn_location ON cdata_cmn_location.sys_id = cdata_dmn_demand.location
+	LEFT JOIN cdata_cmn_department ON cdata_cmn_department.sys_id = cdata_dmn_demand.department 

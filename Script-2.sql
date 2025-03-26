@@ -1,0 +1,2 @@
+SELECT empno, givenname, surname, preferredname, initial, primarypositioncode, positionname, positionnamefr, active, email, paygroupcode, paygroupdesc, locationcode, locationdesc, employstatuscode, employstatusdesc, jobstatuscode, jobstatusdesc, fte, photorevision, last_update, othertext10, othertext11, othertext12
+FROM robinson.avanti_employees_pg;
